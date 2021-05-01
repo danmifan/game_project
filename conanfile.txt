@@ -1,0 +1,11 @@
+[requires]
+sfml/2.5.1@bincrafters/stable
+
+[generators]
+premake
+
+[options]
+sfml:shared=True
+
+[imports]
+lib, *.so* -> thirdparty/lib/

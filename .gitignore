@@ -30,3 +30,24 @@
 *.exe
 *.out
 *.app
+
+# Premake
+*.make
+Makefile
+
+# clangd
+.cache/
+compile_commands.json
+
+# Dirs
+lib/
+bin/
+thirdparty/
+
+# Conan
+conan.lock
+conan_imports_manifest.txt
+conanbuildinfo.premake.lua
+conanbuildinfo.txt
+conaninfo.txt
+graph_info.json
