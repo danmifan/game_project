@@ -8,4 +8,4 @@ premake
 sfml:shared=True
 
 [imports]
-lib, *.so* -> thirdparty/lib/
+lib, *.so* -> lib/

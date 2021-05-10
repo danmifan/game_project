@@ -10,6 +10,42 @@ linkoptions { }
 
 symbols "On"
 
+
+project "imgui"
+  kind "SharedLib"
+  language "C++"
+  targetdir "lib/"
+
+  includedirs {
+    "thirdparty/imgui"
+  }
+
+  files {
+    "thirdparty/imgui/*.cpp"
+  }
+
+project "imgui-sfml"
+  kind "SharedLib"
+  language "C++"
+  targetdir "lib/"
+
+  includedirs {
+    "thirdparty/imgui",
+    "thirdparty/imgui-sfml"
+  }
+
+  libdirs {
+    "lib"
+  }
+
+  links {
+    "imgui"
+  }
+
+  files {
+    "thirdparty/imgui-sfml/*.cpp"
+  }
+
 project "engine"
   kind "SharedLib"
   language "C++"
@@ -17,16 +53,21 @@ project "engine"
 
   includedirs {
     conan_includedirs,
-    "include"
+    "include",
+    "thirdparty/imgui",
+    "thirdparty/imgui-sfml"
   }
 
   libdirs {
+    "lib",
     conan_libdirs
   }
 
   links {
     conan_libs,
-    conan_system_libs
+    conan_system_libs,
+    "imgui",
+    "imgui-sfml"
   }
 
   files {
@@ -40,7 +81,9 @@ project "game"
 
   includedirs {
     conan_includedirs,
-    "include"
+    "include",
+    "thirdparty/imgui",
+    "thirdparty/imgui-sfml"
   }
 
   libdirs {
