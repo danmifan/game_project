@@ -6,14 +6,8 @@
 
 class TestGui : public AbstractGui {
  public:
-  TestGui(const char* name) : AbstractGui(name) {}
-  void update() override {
-    ImGui::Begin(name_);
-
-    ImGui::Button("test");
-
-    ImGui::End();
-  }
+  TestGui(const char* name);
+  void update() override;
 
  private:
 };

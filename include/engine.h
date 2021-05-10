@@ -5,6 +5,7 @@
 
 #include <gui/abstract_gui.h>
 #include <gui/test_gui.h>
+#include <gui/profiler_gui.h>
 
 #include <list>
 
@@ -30,7 +31,8 @@ class Engine {
   std::list<AbstractGui*> gui_;
   bool active_ = true;
 
-  TestGui* test_gui;
+  TestGui* test_gui_;
+  ProfilerGui* profiler_gui_;
 };
 
 #endif  // ENGINE_H

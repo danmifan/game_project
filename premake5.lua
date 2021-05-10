@@ -71,7 +71,8 @@ project "engine"
   }
 
   files {
-    "src/engine.cpp"
+    "src/engine.cpp",
+    "src/gui/*.cpp"
   }
 
 project "game"

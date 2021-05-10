@@ -2,16 +2,23 @@
 
 #include <imgui-SFML.h>
 #include <imgui.h>
+#include <game.h>
+#include <profiler.h>
 
 #include <iostream>
 
 Engine::Engine(uint width, uint height) {
   window_ = new sf::RenderWindow(sf::VideoMode(width, height), "MyWindow");
 
+  Game::setHeight(height);
+  Game::setWidth(width);
+
   window_->setFramerateLimit(60);
 
-  test_gui = new TestGui("MyWindow");
-  addUI(test_gui);
+  test_gui_ = new TestGui("MyWindow");
+  profiler_gui_ = new ProfilerGui("Profiler");
+  addUI(test_gui_);
+  addUI(profiler_gui_);
 }
 
 void Engine::init() { ImGui::SFML::Init(*window_); }
@@ -26,7 +33,8 @@ void Engine::processEvents() {
       active_ = false;
     }
 
-    if (event.key.code == sf::Keyboard::Escape) {
+    if (event.type == sf::Event::KeyPressed &&
+        event.key.code == sf::Keyboard::Escape) {
       active_ = false;
     }
   }
@@ -35,17 +43,19 @@ void Engine::processEvents() {
 void Engine::updateLogic() {}
 
 void Engine::draw() {
+  Profiler::begin("Drawing");
   window_->clear(sf::Color::Black);
 
   // window_->draw(shape);
 
   drawUI();
 
+  Profiler::end();
+
   window_->display();
 }
 
 void Engine::drawUI() {
-  elapsed_time_ = clock_.restart();
   ImGui::SFML::Update(*window_, elapsed_time_);
 
   for (const auto& gui : gui_) {
@@ -63,13 +73,17 @@ void Engine::update() {
   sf::Clock clock;
   while (active_) {
     elapsed_time_ = clock.restart();
+    Game::setDeltaTime(elapsed_time_.asSeconds());
 
+    Profiler::begin("Event processing");
     processEvents();
-    updateLogic();
-    draw();
+    Profiler::end();
 
-    std::cout << "Elapsed time : " << elapsed_time_.asSeconds() << std::endl;
-    std::cout << "FPS : " << 1.0f / elapsed_time_.asSeconds() << std::endl;
+    Profiler::begin("Update logic");
+    updateLogic();
+    Profiler::end();
+
+    draw();
   }
 
   shutdown();
