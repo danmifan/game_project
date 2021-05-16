@@ -10,13 +10,12 @@ void TestGui::update() {
       ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing |
       ImGuiWindowFlags_NoNav;
 
-  bool p_open;
-
-  if (ImGui::Begin("Example: Simple overlay", &p_open, window_flags)) {
+  if (ImGui::Begin("Example: Simple overlay", NULL, window_flags)) {
     ImGui::Text("Info\n");
     ImGui::Separator();
     ImGui::Text("FPS : %f\n", Game::FPS());
     ImGui::Text("Resolution : %i*%i\n", Game::width(), Game::height());
+    ImGui::Text("Mouse x : %i y : %i\n", Game::mouseX(), Game::mouseY());
   }
   ImGui::End();
 }

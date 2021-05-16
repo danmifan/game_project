@@ -37,6 +37,12 @@ void Engine::processEvents() {
         event.key.code == sf::Keyboard::Escape) {
       active_ = false;
     }
+
+    if (event.type == sf::Event::MouseMoved) {
+      const sf::Vector2i mouse_coords = sf::Mouse::getPosition(*window_);
+      Game::setMouseX(mouse_coords.x);
+      Game::setMouseY(mouse_coords.y);
+    }
   }
 }
 
