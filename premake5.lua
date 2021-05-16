@@ -30,6 +30,7 @@ project "imgui-sfml"
   targetdir "lib/"
 
   includedirs {
+    conan_includedirs,
     "thirdparty/imgui",
     "thirdparty/imgui-sfml"
   }
