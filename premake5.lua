@@ -73,6 +73,7 @@ project "engine"
 
   files {
     "src/engine.cpp",
+    "src/entity.cpp",
     "src/gui/*.cpp"
   }
 

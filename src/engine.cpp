@@ -4,6 +4,10 @@
 #include <imgui.h>
 #include <game.h>
 #include <profiler.h>
+#include <world.h>
+#include <texture_manager.h>
+#include "input_system.h"
+#include "move_system.h"
 
 #include <iostream>
 
@@ -21,7 +25,11 @@ Engine::Engine(uint width, uint height) {
   addUI(profiler_gui_);
 }
 
-void Engine::init() { ImGui::SFML::Init(*window_); }
+void Engine::init() {
+  ImGui::SFML::Init(*window_);
+
+  TextureManager::loadTexture("resources/textures/megaman.png", "megaman");
+}
 
 void Engine::processEvents() {
   sf::Event event;
@@ -43,16 +51,25 @@ void Engine::processEvents() {
       Game::setMouseX(mouse_coords.x);
       Game::setMouseY(mouse_coords.y);
     }
+
+    // Placeholder
+    InputSystem::update(event);
   }
 }
 
-void Engine::updateLogic() {}
+void Engine::updateLogic() {
+  MoveSystem::update();
+  InputSystem::reset();
+}
 
 void Engine::draw() {
   Profiler::begin("Drawing");
   window_->clear(sf::Color::Black);
 
-  // window_->draw(shape);
+  // Drawing all of our entities
+  for (const auto& entity : World::getEntities()) {
+    window_->draw(*entity);
+  }
 
   drawUI();
 
